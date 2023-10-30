@@ -1,93 +1,132 @@
 <template>
-  
-  <!-- <section class=" bg-pastel-2 TeamSlider  z-10 overflow-hidden"> -->
-            <!-- <h2 class="text-[5rem] md:text-[9.375rem] xl:text-[15rem] w-full leading-tight text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-4">{{ data.title }}</h2> -->
-            <div class="horizontal-container">
-                <div class="horizontal-wrapper">
-                    <div class="horizontal-scroller">
-                        <div class="row py-[3.75rem] md:py-20 xl:py-32">
-                            <div class="mr-12 sm:mr-24 md:mr-[10rem] xl:mr-[20rem] flex-shrink-0">
-                                <img class="w-[12.5rem] md:w-[21.875rem] xl:w-[500px]" src="https://s3.ap-south-1.amazonaws.com/images.onprintshop/Naresh_Devra_ccd363ac45.png" >
-                            </div>
-                            <div class="mr-12 sm:mr-24 md:mr-[10rem] xl:mr-[20rem] flex-shrink-0">
-                                <img class="w-[12.5rem] md:w-[21.875rem] xl:w-[500px]" src="https://s3.ap-south-1.amazonaws.com/images.onprintshop/Naresh_Devra_ccd363ac45.png" >
-                            </div>
-                            <div class="mr-12 sm:mr-24 md:mr-[10rem] xl:mr-[20rem] flex-shrink-0">
-                                <img class="w-[12.5rem] md:w-[21.875rem] xl:w-[500px]" src="https://s3.ap-south-1.amazonaws.com/images.onprintshop/Naresh_Devra_ccd363ac45.png" >
-                            </div>
-                            <div class="mr-12 sm:mr-24 md:mr-[10rem] xl:mr-[20rem] flex-shrink-0">
-                                <img class="w-[12.5rem] md:w-[21.875rem] xl:w-[500px]" src="https://s3.ap-south-1.amazonaws.com/images.onprintshop/Naresh_Devra_ccd363ac45.png" >
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="firstContainer">
+        <h1>Testing horizontal scrolling w/ three sections</h1>
+        <h2>First Container</h2>
+        </div>
+        <div class="container">
+        <div class="description panel blue">
+            <div>
+            SCROLL DOWN
+            <div class="scroll-down"><div class="arrow"></div></div>
             </div>
-    <!-- </section> -->
+        </div>
+
+        <section class="panel red">
+            ONE
+        </section>
+        <section class="panel orange">
+            TWO
+        </section>
+        <section class="panel purple">
+            THREE
+        </section>
+        </div>
+        <div class="lastContainer">
+        Last Container
+        </div>
 </template>
 <script type="text/javascript">
-
+console.clear();
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
-export default {
-    props:{
-        data:Object
-    },
-    mounted() {
-        
-            const containerMain = document.querySelector(".horizontal-container");
-            const container = document.querySelector(".horizontal-scroller");
-            const containerWidth = container.scrollWidth - window.innerWidth;
-            // Create the GSAP animation
-            gsap.to(container, {
-            x: () => -containerWidth,
-            scrollTrigger: {
-                markers: false,
-                trigger: '.horizontal-wrapper',
-                start: 'top top',
-                scrub: 0.5,
-                pin: '.horizontal-container',
-                end: () => "+=" + containerWidth,
-                invalidateOnRefresh: true,
-                // onEnter: () => {
-                // // When the animation starts, set position to fixed
-                // setTimeout(() => {
-                //     containerMain.style.position = 'fixed'; 
-                //     containerMain.style.transform = 'translate(0px, 0px)'; 
-                // }, 20);
-                // },
-                // onLeaveBack: () => {
-                // // When scrolling back, set position to absolute (or any appropriate position)
-                // containerMain.style.position = '';
-                // },
-            }
-            });  
-    },
-}   
 
+
+// if (process.client)
+setTimeout(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+let sections = gsap.utils.toArray(".panel");
+
+gsap.to(sections, {
+  xPercent: -100 * (sections.length - 1),
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".container",
+    pin: true,
+    scrub: 1,
+    // snap: 1 / (sections.length - 1),
+    end: () => "+=" + document.querySelector(".container").offsetWidth
+  }
+});
+}, 2000);
+
+
+
+// const slides = [
+//   { id: "one", color: "teal" },
+//   { id: "two", color: "orange" },
+//   { id: "three", color: "emerald" },
+//   { id: "four", color: "indigo" },
+//   { id: "five", color: "pink" },
+//   { id: "six", color: "teal" }
+// ];
 </script>
-<style scoped>
-.horizontal-scroller {
-  display: grid;
-  grid-template-rows: repeat(2, 1fr);
-  gap: 5px;
-  width: 100%;
-  height: 100vh;
+
+
+
+
+
+<!-- I've used tailwind in my actual app but can't seem to get that to work here so included the exact same styles below too -->
+<style>
+html {
+	overflow-y: scroll;
+	height: 100%;
+	-webkit-overflow-scrolling: touch;
+	overflow-scrolling: touch;
 }
-.horizontal-wrapper {
-  width: 100%;
-  height: calc(100vh + 210vw);
+body {
+	overflow-y: visible;
+	position: relative;
+  height: unset;
+}
+html, body {
+	overflow-x: hidden;
+	margin: 0;
 }
 
-.horizontal-container {
-  width: 100%;
-  height: calc(100vh + 210vw);
-  margin-top: 2em;
+.container {
+	width: 400%;
+	height: 100vh;
+	display: flex;
+	flex-wrap: nowrap;
 }
 
-.horizontal-scroller .row {
+.firstContainer {
   display: flex;
-  justify-content: flex-start;
-  gap: 5px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: yellow;
 }
-</style>
+.panel {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1.5em;
+    text-align: center;
+    color: white;
+    position: relative;
+    box-sizing: border-box;
+    padding: 10px;
+}
+.red{
+    background: red;
+}
+.orange{
+    background: orange;
+}
+.purple{
+    background: purple;
+}
+.blue{
+    background: blue;
+}
+.lastContainer {
+  display: flex;
+  height: 100vh;
+  background: yellow;
+}</style>
