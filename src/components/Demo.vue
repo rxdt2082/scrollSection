@@ -84,8 +84,12 @@
     width: calc(820px * 5); /* Adjust the width based on the number of sections */
   }
   .process__item {
-    width: 820px;
-    background-color: #2b518bd2;
-  }
+
+    /* flex: 1; */
+
+    width: 821px;
+    background-color: #3978d6d2;
+
+}
   </style>
   
