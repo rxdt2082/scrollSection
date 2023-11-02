@@ -86,8 +86,8 @@
   
   .process__item {
     /* flex: 1; */
-    width: 820px;
-    background-color: #28af1cd2;
+    width: 821px;
+    background-color: #45a73cd2;
   }
   </style>
   
