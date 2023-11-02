@@ -88,6 +88,7 @@
     /* flex: 1; */
     width: 820px;
 
+
     background-color: #e146cad2;
 
   }
